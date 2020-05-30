@@ -34,5 +34,4 @@ class RecordServiceTest {
     var actual = target.findRecords();
     assertEquals(dummyRecords, actual);
   }
-
 }
