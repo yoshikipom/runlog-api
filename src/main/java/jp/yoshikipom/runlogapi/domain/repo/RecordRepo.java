@@ -6,4 +6,6 @@ import jp.yoshikipom.runlogapi.domain.model.Record;
 public interface RecordRepo {
 
   List<Record> findRecords();
+
+  List<Record> findRecordsByMonth(int year, int month);
 }

@@ -5,10 +5,11 @@ import jp.yoshikipom.runlogapi.domain.model.Record;
 import jp.yoshikipom.runlogapi.domain.service.RecordService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/records")
+@RequestMapping("")
 public class RecordController {
 
   private RecordService recordService;
@@ -17,8 +18,14 @@ public class RecordController {
     this.recordService = recordService;
   }
 
-  @GetMapping("")
-  List<Record> getList() {
+  @GetMapping("/records")
+  List<Record> getRecords() {
     return this.recordService.findRecords();
+  }
+
+  @GetMapping("/monthRecords")
+  List<Record> getMonthRecords(@RequestParam(name = "year") int year,
+      @RequestParam(name = "month") int month) {
+    return this.recordService.findMonthRecords(year, month);
   }
 }

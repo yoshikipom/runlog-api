@@ -1,3 +1,4 @@
+drop table if exists record;
 create table if not exists record (
     id int NOT NULL AUTO_INCREMENT,
     data_date date not null unique,

@@ -17,4 +17,8 @@ public class RecordService {
   public List<Record> findRecords() {
     return this.recordRepo.findRecords();
   }
+
+  public List<Record> findMonthRecords(int year, int month) {
+    return this.recordRepo.findRecordsByMonth(year, month);
+  }
 }

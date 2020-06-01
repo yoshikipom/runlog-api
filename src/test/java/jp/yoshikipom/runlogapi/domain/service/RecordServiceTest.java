@@ -34,4 +34,11 @@ class RecordServiceTest {
     var actual = target.findRecords();
     assertEquals(dummyRecords, actual);
   }
+
+  @Test
+  void findMonthRecords_success() {
+    when(recordRepo.findRecordsByMonth(2020, 5)).thenReturn(dummyRecords);
+    var actual = target.findMonthRecords(2020, 5);
+    assertEquals(dummyRecords, actual);
+  }
 }
