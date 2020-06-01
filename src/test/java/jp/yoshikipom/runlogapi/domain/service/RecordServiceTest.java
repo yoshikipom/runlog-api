@@ -36,7 +36,7 @@ class RecordServiceTest {
   }
 
   @Test
-  void findMonthRecords() {
+  void findMonthRecords_success() {
     when(recordRepo.findRecordsByMonth(2020, 5)).thenReturn(dummyRecords);
     var actual = target.findMonthRecords(2020, 5);
     assertEquals(dummyRecords, actual);
