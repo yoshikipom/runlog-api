@@ -1,4 +1,4 @@
-package jp.yoshikipom.runlogapi.infra;
+package jp.yoshikipom.runlogapi.infra.record;
 
 import jp.yoshikipom.runlogapi.domain.model.Record;
 import org.modelmapper.AbstractConverter;

@@ -1,4 +1,4 @@
-package jp.yoshikipom.runlogapi.infra;
+package jp.yoshikipom.runlogapi.infra.record;
 
 import java.sql.Date;
 import javax.persistence.Entity;
