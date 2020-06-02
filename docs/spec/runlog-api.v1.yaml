@@ -1,0 +1,99 @@
+openapi: 3.0.0
+info:
+  title: runlog-api-v1
+  version: '1.0'
+  license:
+    name: MIT
+  contact:
+    name: Yoshiki Shino
+    url: 'https://github.com/yoshikipom'
+    email: yoshiki.shino.tech@gmail.com
+servers:
+  - url: 'http://localhost:8080'
+paths:
+  /records:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Record'
+              examples:
+                example-1:
+                  value:
+                    - date: '2020-06-01'
+                      distance: 10
+                      memo: test memo
+                    - date: '2020-06-02'
+                      distance: 10
+                      memo: test memo
+      operationId: get-record
+    parameters: []
+  /monthRecords:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Record'
+              examples:
+                example-1:
+                  value:
+                    - date: '2020-06-01'
+                      distance: 10
+                      memo: test memo
+                    - date: '2020-06-02'
+                      distance: 10
+                      memo: test memo
+                    - date: '2020-06-30'
+                      distance: 10
+                      memo: test memo
+      operationId: get-monthRecords
+      parameters:
+        - schema:
+            type: integer
+          in: query
+          name: year
+          description: |+
+            YYYY
+
+
+          required: true
+        - schema:
+            type: integer
+          in: query
+          name: month
+          description: MM
+          required: true
+components:
+  schemas:
+    Record:
+      title: Record
+      type: object
+      properties:
+        date:
+          type: string
+          description: YYYY-MM-DD
+        ditance:
+          type: number
+        memo:
+          type: string
+      required:
+        - date
+        - ditance
+        - memo
+      x-examples:
+        example-1:
+          date: '2020-06-01'
+          distance: 10
+          memo: test memo
