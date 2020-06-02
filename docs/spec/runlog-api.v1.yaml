@@ -35,6 +35,21 @@ paths:
                       memo: test memo
       operationId: get-record
     parameters: []
+    post:
+      summary: ''
+      operationId: post-record
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Record'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Record'
   /monthRecords:
     get:
       summary: Your GET endpoint
