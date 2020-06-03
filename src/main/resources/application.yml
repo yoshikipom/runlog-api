@@ -1,4 +1,8 @@
 spring:
+  mvc:
+    throw-exception-if-no-handler-found: true
+  resources:
+    add-mappings: false
   datasource:
     driver-class-name: org.h2.Driver
     url: jdbc:h2:mem:runlog;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=MYSQL

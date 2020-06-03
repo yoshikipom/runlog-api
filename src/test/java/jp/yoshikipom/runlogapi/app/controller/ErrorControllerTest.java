@@ -28,6 +28,26 @@ class ErrorControllerTest {
   }
 
   @Test
+  void handleNotFound_success() throws Exception {
+    mockMvc.perform(get("/error/404"))
+        .andExpect(status().isNotFound())
+        .andExpect(jsonPath("status").value(404))
+        .andExpect(jsonPath("error").value("Not Found"))
+        .andExpect(jsonPath("message").value("error-message"))
+        .andExpect(jsonPath("path").value("/error/404"));
+  }
+
+  @Test
+  void handleNotFound_noHandler_success() throws Exception {
+    mockMvc.perform(get("/not-found-path"))
+        .andExpect(status().isNotFound())
+        .andExpect(jsonPath("status").value(404))
+        .andExpect(jsonPath("error").value("Not Found"))
+        .andExpect(jsonPath("message").value("No handler found for GET /not-found-path"))
+        .andExpect(jsonPath("path").value("/not-found-path"));
+  }
+
+  @Test
   void handleServerError_success() throws Exception {
     mockMvc.perform(get("/error/500"))
         .andExpect(status().isInternalServerError())
