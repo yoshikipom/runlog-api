@@ -18,6 +18,16 @@ class ErrorControllerTest {
   private MockMvc mockMvc;
 
   @Test
+  void handleBadRequest_success() throws Exception {
+    mockMvc.perform(get("/error/400"))
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("status").value(400))
+        .andExpect(jsonPath("error").value("Bad Request"))
+        .andExpect(jsonPath("message").value("error-message"))
+        .andExpect(jsonPath("path").value("/error/400"));
+  }
+
+  @Test
   void handleServerError_success() throws Exception {
     mockMvc.perform(get("/error/500"))
         .andExpect(status().isInternalServerError())

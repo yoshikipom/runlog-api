@@ -1,6 +1,7 @@
 package jp.yoshikipom.runlogapi.app.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import jp.yoshikipom.runlogapi.app.exception.BadRequestException;
 import jp.yoshikipom.runlogapi.app.response.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,18 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 @Slf4j
 public class ErrorController {
+
+  @ExceptionHandler(BadRequestException.class)
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  public ErrorResponse handleBadRequest(HttpServletRequest req, Exception e) {
+    log.info("bad request.", e);
+    return ErrorResponse.builder()
+        .status(HttpStatus.BAD_REQUEST.value())
+        .error(HttpStatus.BAD_REQUEST.getReasonPhrase())
+        .message(e.getMessage())
+        .path(req.getRequestURI())
+        .build();
+  }
 
   // 予想外のエラーはここでハンドリング
   @ExceptionHandler(Exception.class)
