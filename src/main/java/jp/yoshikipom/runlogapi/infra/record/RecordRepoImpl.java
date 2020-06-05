@@ -39,4 +39,10 @@ public class RecordRepoImpl implements RecordRepo {
         .collect(Collectors.toList());
   }
 
+  @Override
+  public Record register(Record record) {
+    RecordEntity entity = modelMapper.map(record, RecordEntity.class);
+    RecordEntity registeredEntity = this.jpaRepository.save(entity);
+    return modelMapper.map(registeredEntity, Record.class);
+  }
 }

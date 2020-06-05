@@ -8,4 +8,6 @@ public interface RecordRepo {
   List<Record> findRecords();
 
   List<Record> findRecordsByMonth(int year, int month);
+
+  Record register(Record record);
 }
