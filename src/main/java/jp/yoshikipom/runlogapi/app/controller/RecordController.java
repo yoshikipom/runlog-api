@@ -4,12 +4,10 @@ import java.util.List;
 import jp.yoshikipom.runlogapi.domain.model.Record;
 import jp.yoshikipom.runlogapi.domain.service.RecordService;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("")
 public class RecordController {
 
   private RecordService recordService;

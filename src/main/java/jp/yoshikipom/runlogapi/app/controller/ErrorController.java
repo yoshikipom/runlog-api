@@ -29,7 +29,7 @@ public class ErrorController {
 
   @ExceptionHandler({NoHandlerFoundException.class, NotFoundException.class})
   @ResponseStatus(HttpStatus.NOT_FOUND)
-  public ErrorResponse handleNotFOund(HttpServletRequest req, Exception e) {
+  public ErrorResponse handleNotFound(HttpServletRequest req, Exception e) {
     log.info("bad request.", e);
     return ErrorResponse.builder()
         .status(HttpStatus.NOT_FOUND.value())
@@ -47,7 +47,7 @@ public class ErrorController {
     return ErrorResponse.builder()
         .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
         .error(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase())
-        .message(e.getMessage())
+        .message("Unexpected error")
         .path(req.getRequestURI())
         .build();
   }

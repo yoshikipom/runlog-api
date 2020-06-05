@@ -53,7 +53,7 @@ class ErrorControllerTest {
         .andExpect(status().isInternalServerError())
         .andExpect(jsonPath("status").value(500))
         .andExpect(jsonPath("error").value("Internal Server Error"))
-        .andExpect(jsonPath("message").value("error-message"))
+        .andExpect(jsonPath("message").value("Unexpected error"))
         .andExpect(jsonPath("path").value("/error/500"));
   }
 }
