@@ -32,22 +32,22 @@ class RecordRepoImplTest {
   @Mock
   private RecordEntity recordEntity2;
   @Mock
-  private Record result1;
+  private Record record1;
   @Mock
-  private Record result2;
+  private Record record2;
 
   @BeforeEach
   void setUp() {
-    when(modelMapper.map(recordEntity1, Record.class)).thenReturn(result1);
-    when(modelMapper.map(recordEntity2, Record.class)).thenReturn(result2);
+    when(modelMapper.map(recordEntity1, Record.class)).thenReturn(record1);
+    when(modelMapper.map(recordEntity2, Record.class)).thenReturn(record2);
   }
 
   @Test
   void findRecords_success() {
     when(jpaRepository.findAll()).thenReturn(List.of(recordEntity1, recordEntity2));
     var actual = target.findRecords();
-    assertEquals(result1, actual.get(0));
-    assertEquals(result2, actual.get(1));
+    assertEquals(record1, actual.get(0));
+    assertEquals(record2, actual.get(1));
   }
 
   @Test
@@ -58,7 +58,18 @@ class RecordRepoImplTest {
 
     var actual = target.findRecordsByMonth(2020, 6);
 
-    assertEquals(result1, actual.get(0));
+    assertEquals(record1, actual.get(0));
     verify(jpaRepository, times(1)).findByDataDateBetween(firstDay, lastDay);
+  }
+
+  @Test
+  void register_success() {
+    when(modelMapper.map(record1, RecordEntity.class)).thenReturn(recordEntity1);
+    when(jpaRepository.save(recordEntity1)).thenReturn(recordEntity2);
+    when(modelMapper.map(recordEntity2, Record.class)).thenReturn(record2);
+
+    var actual = target.register(record1);
+
+    assertEquals(record2, actual);
   }
 }

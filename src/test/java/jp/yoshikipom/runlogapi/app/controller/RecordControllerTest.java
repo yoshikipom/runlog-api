@@ -1,7 +1,9 @@
 package jp.yoshikipom.runlogapi.app.controller;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -15,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest
@@ -33,8 +36,32 @@ class RecordControllerTest {
     String expectedResponse = new TestUtil().readFile("data/app/response/records-200.json");
 
     this.mockMvc.perform(get("/records"))
-        .andExpect(status().is2xxSuccessful())
+        .andExpect(status().isOk())
         .andExpect(content().json(expectedResponse));
+  }
+
+  @Test
+  void postRecord_success() throws Exception {
+    when(mockedService.register(any())).thenReturn(createOne());
+
+    String request = new TestUtil().readFile("data/app/request/record-post-201.json");
+    String expectedResponse = new TestUtil().readFile("data/app/response/record-post-201.json");
+
+    this.mockMvc.perform(post("/records")
+        .content(request)
+        .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
+        .andExpect(status().isCreated())
+        .andExpect(content().json(expectedResponse));
+  }
+
+  @Test
+  void postRecord_badRequest() throws Exception {
+    String request = new TestUtil().readFile("data/app/request/record-post-400.json");
+
+    this.mockMvc.perform(post("/records")
+        .content(request)
+        .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
+        .andExpect(status().isBadRequest());
   }
 
   @Test
@@ -44,7 +71,7 @@ class RecordControllerTest {
     String expectedResponse = new TestUtil().readFile("data/app/response/records-200.json");
 
     this.mockMvc.perform(get("/records"))
-        .andExpect(status().is2xxSuccessful())
+        .andExpect(status().isOk())
         .andExpect(content().json(expectedResponse));
   }
 
@@ -60,5 +87,13 @@ class RecordControllerTest {
         .memo("test memo2")
         .build();
     return List.of(record1, record2);
+  }
+
+  Record createOne() {
+    return Record.builder()
+        .date(LocalDate.of(2020, 5, 29))
+        .distance(10)
+        .memo("test memo1")
+        .build();
   }
 }
