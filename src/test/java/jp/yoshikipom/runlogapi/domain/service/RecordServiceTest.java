@@ -23,6 +23,10 @@ class RecordServiceTest {
 
   @Mock
   private List<Record> dummyRecords;
+  @Mock
+  private Record dummyRecord;
+  @Mock
+  private Record createdRecord;
 
   @BeforeEach
   void setUp() {
@@ -33,6 +37,13 @@ class RecordServiceTest {
   void findRecords_success() {
     var actual = target.findRecords();
     assertEquals(dummyRecords, actual);
+  }
+
+  @Test
+  void register_success() {
+    when(recordRepo.register(dummyRecord)).thenReturn(createdRecord);
+    var actual = target.register(dummyRecord);
+    assertEquals(createdRecord, actual);
   }
 
   @Test
