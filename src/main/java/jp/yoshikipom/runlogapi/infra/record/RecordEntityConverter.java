@@ -11,6 +11,7 @@ public class RecordEntityConverter extends AbstractConverter<Record, RecordEntit
   @Override
   protected RecordEntity convert(Record source) {
     return RecordEntity.builder()
+        .id(source.getId())
         .dataDate(Date.valueOf(source.getDate()))
         .distance(source.getDistance())
         .memo(source.getMemo())

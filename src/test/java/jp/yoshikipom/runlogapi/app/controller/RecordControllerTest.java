@@ -77,11 +77,13 @@ class RecordControllerTest {
 
   List<Record> createList() {
     Record record1 = Record.builder()
+        .id(1)
         .date(LocalDate.of(2020, 5, 29))
         .distance(10)
         .memo("test memo1")
         .build();
     Record record2 = Record.builder()
+        .id(2)
         .date(LocalDate.of(2020, 5, 30))
         .distance(5)
         .memo("test memo2")
@@ -91,6 +93,7 @@ class RecordControllerTest {
 
   Record createOne() {
     return Record.builder()
+        .id(1)
         .date(LocalDate.of(2020, 5, 29))
         .distance(10)
         .memo("test memo1")
