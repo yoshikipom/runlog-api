@@ -6,6 +6,7 @@ import jp.yoshikipom.runlogapi.app.request.RecordRequest;
 import jp.yoshikipom.runlogapi.domain.model.Record;
 import jp.yoshikipom.runlogapi.domain.service.RecordService;
 import org.modelmapper.ModelMapper;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -47,7 +48,11 @@ public class RecordController {
   @DeleteMapping("/records/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   void deleteRecord(@PathVariable("id") Integer id) {
-    this.recordService.unregister(id);
+    try {
+      this.recordService.unregister(id);
+    } catch (EmptyResultDataAccessException e) {
+      throw new BadRequestException("record is not found", e);
+    }
   }
 
   @GetMapping("/monthRecords")
