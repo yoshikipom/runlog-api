@@ -1,6 +1,8 @@
 package jp.yoshikipom.runlogapi.domain.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
@@ -44,6 +46,14 @@ class RecordServiceTest {
     when(recordRepo.register(dummyRecord)).thenReturn(createdRecord);
     var actual = target.register(dummyRecord);
     assertEquals(createdRecord, actual);
+  }
+
+  @Test
+  void unregister_success() {
+    Integer id = 1;
+    doNothing().when(recordRepo).unregister(id);
+    target.unregister(id);
+    verify(recordRepo).unregister(id);
   }
 
   @Test

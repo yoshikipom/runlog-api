@@ -1,6 +1,7 @@
 package jp.yoshikipom.runlogapi.infra.record;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -71,5 +72,13 @@ class RecordRepoImplTest {
     var actual = target.register(record1);
 
     assertEquals(record2, actual);
+  }
+
+  @Test
+  void unregister_success() {
+    Integer id = 1;
+    doNothing().when(jpaRepository).deleteById(id);
+    target.unregister(id);
+    verify(jpaRepository).deleteById(id);
   }
 }
