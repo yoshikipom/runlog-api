@@ -25,4 +25,8 @@ public class RecordService {
   public Record register(Record record) {
     return this.recordRepo.register(record);
   }
+
+  public void unregister(Integer id) {
+    this.recordRepo.unregister(id);
+  }
 }

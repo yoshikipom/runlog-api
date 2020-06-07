@@ -45,4 +45,9 @@ public class RecordRepoImpl implements RecordRepo {
     RecordEntity registeredEntity = this.jpaRepository.save(entity);
     return modelMapper.map(registeredEntity, Record.class);
   }
+
+  @Override
+  public void unregister(Integer id) {
+    this.jpaRepository.deleteById(id);
+  }
 }

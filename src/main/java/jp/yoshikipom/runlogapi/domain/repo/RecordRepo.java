@@ -10,4 +10,6 @@ public interface RecordRepo {
   List<Record> findRecordsByMonth(int year, int month);
 
   Record register(Record record);
+
+  void unregister(Integer id);
 }

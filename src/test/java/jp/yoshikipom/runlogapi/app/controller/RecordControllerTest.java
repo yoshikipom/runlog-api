@@ -1,7 +1,11 @@
 package jp.yoshikipom.runlogapi.app.controller;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -17,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -61,6 +66,25 @@ class RecordControllerTest {
     this.mockMvc.perform(post("/records")
         .content(request)
         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
+        .andExpect(status().isBadRequest());
+  }
+
+  @Test
+  void deleteRecord_success() throws Exception {
+    Integer id = 1;
+    doNothing().when(mockedService).unregister(id);
+
+    this.mockMvc.perform(delete("/records/" + id))
+        .andExpect(status().isNoContent());
+  }
+
+  @Test
+  void deleteRecord_badRequest() throws Exception {
+    Integer id = 1;
+    var error = mock(EmptyResultDataAccessException.class);
+    doThrow(error).when(mockedService).unregister(id);
+
+    this.mockMvc.perform(delete("/records/" + id))
         .andExpect(status().isBadRequest());
   }
 
