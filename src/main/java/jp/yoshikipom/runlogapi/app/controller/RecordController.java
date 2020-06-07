@@ -2,8 +2,10 @@ package jp.yoshikipom.runlogapi.app.controller;
 
 import java.util.List;
 import jp.yoshikipom.runlogapi.app.exception.BadRequestException;
+import jp.yoshikipom.runlogapi.app.request.RecordRequest;
 import jp.yoshikipom.runlogapi.domain.model.Record;
 import jp.yoshikipom.runlogapi.domain.service.RecordService;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -18,9 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class RecordController {
 
   private RecordService recordService;
+  private ModelMapper modelMapper;
 
-  public RecordController(RecordService recordService) {
+  public RecordController(RecordService recordService, ModelMapper modelMapper) {
     this.recordService = recordService;
+    this.modelMapper = modelMapper;
   }
 
   @GetMapping("/records")
@@ -30,11 +34,12 @@ public class RecordController {
 
   @PostMapping("/records")
   @ResponseStatus(HttpStatus.CREATED)
-  Record postRecord(@Validated @RequestBody Record request, BindingResult result) {
+  Record postRecord(@Validated @RequestBody RecordRequest request, BindingResult result) {
     if (result.hasErrors()) {
       throw new BadRequestException(result.toString());
     }
-    return this.recordService.register(request);
+    Record record = modelMapper.map(request, Record.class);
+    return this.recordService.register(record);
   }
 
   @GetMapping("/monthRecords")
