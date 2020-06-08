@@ -1,15 +1,19 @@
 package jp.yoshikipom.runlogapi.infra.record;
 
 import java.sql.Date;
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import jp.yoshikipom.runlogapi.domain.model.Record;
 import jp.yoshikipom.runlogapi.domain.repo.RecordRepo;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Repository;
 
 @Repository
+@Slf4j
 public class RecordRepoImpl implements RecordRepo {
 
   private RecordJpaRepository jpaRepository;
@@ -49,5 +53,24 @@ public class RecordRepoImpl implements RecordRepo {
   @Override
   public void unregister(Integer id) {
     this.jpaRepository.deleteById(id);
+  }
+
+  @Override
+  public Optional<Record> findRecordBybDay(int year, int month, int day) {
+    LocalDate date;
+    try {
+      date = LocalDate.of(year, month, day);
+    } catch (DateTimeException e) {
+      log.info(e.getMessage(), e);
+      return Optional.empty();
+    }
+    List<RecordEntity> recordEntities = this.jpaRepository.findByDataDate(Date.valueOf(date));
+    if (recordEntities.isEmpty()) {
+      return Optional.empty();
+    }
+
+    // RecordEntityはyear, month, dayでuniqueなので1件目しか存在しない
+    Record record = modelMapper.map(recordEntities.get(0), Record.class);
+    return Optional.of(record);
   }
 }

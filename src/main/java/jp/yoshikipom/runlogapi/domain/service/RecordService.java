@@ -1,6 +1,7 @@
 package jp.yoshikipom.runlogapi.domain.service;
 
 import java.util.List;
+import java.util.Optional;
 import jp.yoshikipom.runlogapi.domain.model.Record;
 import jp.yoshikipom.runlogapi.domain.repo.RecordRepo;
 import org.springframework.stereotype.Service;
@@ -28,5 +29,9 @@ public class RecordService {
 
   public void unregister(Integer id) {
     this.recordRepo.unregister(id);
+  }
+
+  public Optional<Record> findDayRecord(int year, int month, int day) {
+    return this.recordRepo.findRecordBybDay(year, month, day);
   }
 }

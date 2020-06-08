@@ -1,7 +1,9 @@
 package jp.yoshikipom.runlogapi.app.controller;
 
 import java.util.List;
+import java.util.Optional;
 import jp.yoshikipom.runlogapi.app.exception.BadRequestException;
+import jp.yoshikipom.runlogapi.app.exception.NotFoundException;
 import jp.yoshikipom.runlogapi.app.request.RecordRequest;
 import jp.yoshikipom.runlogapi.domain.model.Record;
 import jp.yoshikipom.runlogapi.domain.service.RecordService;
@@ -59,5 +61,15 @@ public class RecordController {
   List<Record> getMonthRecords(@RequestParam(name = "year") int year,
       @RequestParam(name = "month") int month) {
     return this.recordService.findMonthRecords(year, month);
+  }
+
+  @GetMapping("/dayRecord")
+  Record getDayRecord(@RequestParam(name = "year") int year,
+      @RequestParam(name = "month") int month, @RequestParam(name = "day") int day) {
+    Optional<Record> recordResult = this.recordService.findDayRecord(year, month, day);
+    if (recordResult.isEmpty()) {
+      throw new NotFoundException("Not found day record");
+    }
+    return recordResult.get();
   }
 }
