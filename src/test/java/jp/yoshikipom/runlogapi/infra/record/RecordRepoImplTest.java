@@ -1,6 +1,8 @@
 package jp.yoshikipom.runlogapi.infra.record;
 
+import static java.util.Collections.emptyList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -80,5 +82,27 @@ class RecordRepoImplTest {
     doNothing().when(jpaRepository).deleteById(id);
     target.unregister(id);
     verify(jpaRepository).deleteById(id);
+  }
+
+  @Test
+  void findRecordBybDay_success() {
+    when(jpaRepository.findByDataDate(Date.valueOf("2020-1-1"))).thenReturn(List.of(recordEntity1));
+    when(modelMapper.map(recordEntity1, Record.class)).thenReturn(record1);
+    var actual = target.findRecordBybDay(2020, 1, 1);
+    //noinspection OptionalGetWithoutIsPresent
+    assertEquals(record1, actual.get());
+  }
+
+  @Test
+  void findRecordBybDay_invalidDate() {
+    var actual = target.findRecordBybDay(12345, 12345, 12345);
+    assertTrue(actual.isEmpty());
+  }
+
+  @Test
+  void findRecordBybDay_notFound() {
+    when(jpaRepository.findByDataDate(Date.valueOf("2020-1-1"))).thenReturn(emptyList());
+    var actual = target.findRecordBybDay(2020, 1, 1);
+    assertTrue(actual.isEmpty());
   }
 }

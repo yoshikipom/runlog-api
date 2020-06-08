@@ -6,6 +6,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
+import java.util.Optional;
 import jp.yoshikipom.runlogapi.domain.model.Record;
 import jp.yoshikipom.runlogapi.domain.repo.RecordRepo;
 import org.junit.jupiter.api.BeforeEach;
@@ -61,5 +62,13 @@ class RecordServiceTest {
     when(recordRepo.findRecordsByMonth(2020, 5)).thenReturn(dummyRecords);
     var actual = target.findMonthRecords(2020, 5);
     assertEquals(dummyRecords, actual);
+  }
+
+  @Test
+  void findDayRecord_success() {
+    when(recordRepo.findRecordBybDay(2020, 5, 1)).thenReturn(Optional.of(dummyRecord));
+    var actual = target.findDayRecord(2020, 5, 1);
+    //noinspection OptionalGetWithoutIsPresent
+    assertEquals(dummyRecord, actual.get());
   }
 }

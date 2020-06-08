@@ -13,6 +13,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import jp.yoshikipom.runlogapi.TestUtil;
 import jp.yoshikipom.runlogapi.domain.model.Record;
 import jp.yoshikipom.runlogapi.domain.service.RecordService;
@@ -95,6 +96,21 @@ class RecordControllerTest {
     String expectedResponse = new TestUtil().readFile("data/app/response/records-200.json");
 
     this.mockMvc.perform(get("/records"))
+        .andExpect(status().isOk())
+        .andExpect(content().json(expectedResponse));
+  }
+
+  @Test
+  void getDayRecord_success() throws Exception {
+    int year = 2020;
+    int month = 5;
+    int day = 29;
+    when(mockedService.findDayRecord(year, month, day)).thenReturn(Optional.of(createOne()));
+
+    String expectedResponse = new TestUtil().readFile("data/app/response/day-record-200.json");
+    String requestUrl = String.format("/dayRecord?year=%d&month=%d&day=%d", year, month, day);
+
+    this.mockMvc.perform(get(requestUrl))
         .andExpect(status().isOk())
         .andExpect(content().json(expectedResponse));
   }

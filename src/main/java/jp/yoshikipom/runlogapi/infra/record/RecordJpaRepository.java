@@ -11,4 +11,6 @@ public interface RecordJpaRepository extends JpaRepository<RecordEntity, Integer
   List<RecordEntity> findAll();
 
   List<RecordEntity> findByDataDateBetween(Date from, Date to);
+
+  List<RecordEntity> findByDataDate(Date date);
 }
