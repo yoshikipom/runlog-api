@@ -90,6 +90,55 @@ paths:
           name: month
           description: MM
           required: true
+  '/records/{recordId}':
+    parameters:
+      - schema:
+          type: number
+        name: recordId
+        in: path
+        required: true
+    delete:
+      summary: ''
+      operationId: delete-records-record_id
+      description: ''
+      responses:
+        '204':
+          description: No Content
+  /dayRecord:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Record'
+              examples:
+                example-1:
+                  value:
+                    date: '2020-06-01'
+                    distance: 10
+                    memo: test memo
+      operationId: get-dayRecord
+      description: ''
+      parameters:
+        - schema:
+            type: integer
+          in: query
+          name: year
+          required: true
+        - schema:
+            type: integer
+          in: query
+          name: month
+          required: true
+        - schema:
+            type: integer
+          in: query
+          name: day
+          required: true
 components:
   schemas:
     Record:
