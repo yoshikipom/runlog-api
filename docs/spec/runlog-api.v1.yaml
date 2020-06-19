@@ -148,13 +148,13 @@ components:
         date:
           type: string
           description: YYYY-MM-DD
-        ditance:
+        distance:
           type: number
         memo:
           type: string
       required:
         - date
-        - ditance
+        - distance
         - memo
       x-examples:
         example-1:
