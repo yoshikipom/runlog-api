@@ -41,6 +41,17 @@ paths:
           name: month
           description: YYYY-MM
     parameters: []
+    put:
+      summary: ''
+      operationId: put-records
+      responses:
+        '204':
+          description: No Content
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Record'
   '/records/{date}':
     parameters:
       - schema:
@@ -58,24 +69,6 @@ paths:
       responses:
         '204':
           description: No Content
-    put:
-      summary: ''
-      operationId: put-records-date
-      responses:
-        '204':
-          description: No Content
-      parameters: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Record'
-            examples:
-              example-1:
-                value:
-                  date: '2020-06-01'
-                  distance: 10
-                  memo: test memo
     get:
       summary: ''
       operationId: get-records-date
