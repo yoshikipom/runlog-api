@@ -1,5 +1,6 @@
 package jp.yoshikipom.runlogapi.domain.repo;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import jp.yoshikipom.runlogapi.domain.model.Record;
@@ -12,7 +13,7 @@ public interface RecordRepo {
 
   Record register(Record record);
 
-  void unregister(Integer id);
+  void unregister(LocalDate date);
 
   Optional<Record> findRecordBybDay(int year, int month, int day);
 }

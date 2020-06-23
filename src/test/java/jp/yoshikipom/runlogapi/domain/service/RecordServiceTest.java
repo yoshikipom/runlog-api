@@ -5,6 +5,7 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import jp.yoshikipom.runlogapi.domain.model.Record;
@@ -51,10 +52,10 @@ class RecordServiceTest {
 
   @Test
   void unregister_success() {
-    Integer id = 1;
-    doNothing().when(recordRepo).unregister(id);
-    target.unregister(id);
-    verify(recordRepo).unregister(id);
+    LocalDate date = LocalDate.now();
+    doNothing().when(recordRepo).unregister(date);
+    target.unregister(date);
+    verify(recordRepo).unregister(date);
   }
 
   @Test

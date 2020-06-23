@@ -51,8 +51,9 @@ public class RecordRepoImpl implements RecordRepo {
   }
 
   @Override
-  public void unregister(Integer id) {
-    this.jpaRepository.deleteById(id);
+  public void unregister(LocalDate date) {
+    Date sqlDate = Date.valueOf(date);
+    this.jpaRepository.deleteByDataDate(sqlDate);
   }
 
   @Override
