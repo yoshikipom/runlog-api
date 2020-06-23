@@ -1,5 +1,6 @@
 package jp.yoshikipom.runlogapi.domain.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import jp.yoshikipom.runlogapi.domain.model.Record;
@@ -27,8 +28,8 @@ public class RecordService {
     return this.recordRepo.register(record);
   }
 
-  public void unregister(Integer id) {
-    this.recordRepo.unregister(id);
+  public void unregister(LocalDate date) {
+    this.recordRepo.unregister(date);
   }
 
   public Optional<Record> findDayRecord(int year, int month, int day) {

@@ -16,8 +16,8 @@ import org.springframework.stereotype.Repository;
 @Slf4j
 public class RecordRepoImpl implements RecordRepo {
 
-  private RecordJpaRepository jpaRepository;
-  private ModelMapper modelMapper;
+  private final RecordJpaRepository jpaRepository;
+  private final ModelMapper modelMapper;
 
   public RecordRepoImpl(RecordJpaRepository jpaRepository, ModelMapper modelMapper) {
     this.jpaRepository = jpaRepository;
@@ -51,8 +51,9 @@ public class RecordRepoImpl implements RecordRepo {
   }
 
   @Override
-  public void unregister(Integer id) {
-    this.jpaRepository.deleteById(id);
+  public void unregister(LocalDate date) {
+    Date sqlDate = Date.valueOf(date);
+    this.jpaRepository.deleteById(sqlDate);
   }
 
   @Override

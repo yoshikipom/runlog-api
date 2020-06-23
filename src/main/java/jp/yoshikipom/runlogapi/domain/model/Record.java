@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Record {
 
-  private Integer id;
   private LocalDate date;
   private float distance;
   private String memo;
