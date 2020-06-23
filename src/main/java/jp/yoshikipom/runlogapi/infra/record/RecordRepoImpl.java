@@ -16,8 +16,8 @@ import org.springframework.stereotype.Repository;
 @Slf4j
 public class RecordRepoImpl implements RecordRepo {
 
-  private RecordJpaRepository jpaRepository;
-  private ModelMapper modelMapper;
+  private final RecordJpaRepository jpaRepository;
+  private final ModelMapper modelMapper;
 
   public RecordRepoImpl(RecordJpaRepository jpaRepository, ModelMapper modelMapper) {
     this.jpaRepository = jpaRepository;
