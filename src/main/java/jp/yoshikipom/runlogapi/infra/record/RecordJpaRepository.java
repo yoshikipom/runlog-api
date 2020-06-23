@@ -14,5 +14,4 @@ public interface RecordJpaRepository extends JpaRepository<RecordEntity, Date> {
 
   List<RecordEntity> findByDataDate(Date date);
 
-  void deleteByDataDate(Date date);
 }

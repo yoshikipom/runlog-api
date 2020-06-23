@@ -80,9 +80,9 @@ class RecordRepoImplTest {
   void unregister_success() {
     LocalDate date = LocalDate.now();
     Date sqlDate = Date.valueOf(date);
-    doNothing().when(jpaRepository).deleteByDataDate(sqlDate);
+    doNothing().when(jpaRepository).deleteById(sqlDate);
     target.unregister(date);
-    verify(jpaRepository).deleteByDataDate(sqlDate);
+    verify(jpaRepository).deleteById(sqlDate);
   }
 
   @Test
