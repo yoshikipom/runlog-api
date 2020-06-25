@@ -54,6 +54,18 @@ class RecordRepoImplTest {
   }
 
   @Test
+  void findRecordsByYear_success() {
+    var firstDay = Date.valueOf(LocalDate.of(2020, 1, 1));
+    var lastDay = Date.valueOf(LocalDate.of(2020, 12, 31));
+    when(jpaRepository.findByDataDateBetween(firstDay, lastDay)).thenReturn(List.of(recordEntity1));
+
+    var actual = target.findRecordsByYear(2020);
+
+    assertEquals(record1, actual.get(0));
+    verify(jpaRepository, times(1)).findByDataDateBetween(firstDay, lastDay);
+  }
+
+  @Test
   void findRecordsByMonth_success() {
     var firstDay = Date.valueOf(LocalDate.of(2020, 6, 1));
     var lastDay = Date.valueOf(LocalDate.of(2020, 6, 30));
