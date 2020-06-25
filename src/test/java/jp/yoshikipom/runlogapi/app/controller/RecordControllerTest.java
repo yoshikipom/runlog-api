@@ -119,7 +119,7 @@ class RecordControllerTest {
         .andExpect(status().isBadRequest());
   }
 
-  List<Record> createList() {
+  private List<Record> createList() {
     Record record1 = Record.builder()
         .date(LocalDate.of(2020, 5, 29))
         .distance(10)
@@ -133,7 +133,7 @@ class RecordControllerTest {
     return List.of(record1, record2);
   }
 
-  Record createOne() {
+  private Record createOne() {
     return Record.builder()
         .date(LocalDate.of(2020, 5, 29))
         .distance(10)
