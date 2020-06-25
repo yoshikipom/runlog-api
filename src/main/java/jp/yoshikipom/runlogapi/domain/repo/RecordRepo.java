@@ -11,6 +11,8 @@ public interface RecordRepo {
 
   List<Record> findRecordsByMonth(int year, int month);
 
+  List<Record> findRecordsByYear(int year);
+
   Record register(Record record);
 
   void unregister(LocalDate date);

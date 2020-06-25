@@ -44,6 +44,17 @@ public class RecordRepoImpl implements RecordRepo {
   }
 
   @Override
+  public List<Record> findRecordsByYear(int year) {
+    LocalDate firstDay = LocalDate.of(year, 1, 1);
+    LocalDate lastDay = LocalDate.of(year, 1, 1).plusYears(1).plusDays(-1);
+    var entityList = this.jpaRepository
+        .findByDataDateBetween(Date.valueOf(firstDay), Date.valueOf(lastDay));
+    return entityList.stream()
+        .map(entity -> modelMapper.map(entity, Record.class))
+        .collect(Collectors.toList());
+  }
+
+  @Override
   public Record register(Record record) {
     RecordEntity entity = modelMapper.map(record, RecordEntity.class);
     RecordEntity registeredEntity = this.jpaRepository.save(entity);
