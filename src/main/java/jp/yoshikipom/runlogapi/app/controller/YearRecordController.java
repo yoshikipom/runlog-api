@@ -1,6 +1,7 @@
 package jp.yoshikipom.runlogapi.app.controller;
 
-import jp.yoshikipom.runlogapi.domain.model.YearRecords;
+import java.util.Map;
+import jp.yoshikipom.runlogapi.domain.model.YearRecord;
 import jp.yoshikipom.runlogapi.domain.service.RecordService;
 import org.modelmapper.ModelMapper;
 import org.springframework.validation.annotation.Validated;
@@ -21,7 +22,7 @@ public class YearRecordController {
   }
 
   @GetMapping("")
-  YearRecords getRecords(@Validated @RequestParam(name = "year") Integer year) {
+  Map<Integer, YearRecord> getYearRecords(@Validated @RequestParam(name = "year") Integer year) {
     return this.recordService.findYearRecords(year);
   }
 }

@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.Optional;
 import jp.yoshikipom.runlogapi.domain.model.Record;
 import jp.yoshikipom.runlogapi.domain.model.YearRecord;
-import jp.yoshikipom.runlogapi.domain.model.YearRecords;
 import jp.yoshikipom.runlogapi.domain.repo.RecordRepo;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +27,7 @@ public class RecordService {
     return this.recordRepo.findRecordsByMonth(year, month);
   }
 
-  public YearRecords findYearRecords(int year) {
+  public Map<Integer, YearRecord> findYearRecords(int year) {
     Map<Integer, YearRecord> yearRecords = new HashMap<>();
     for (int month = 1; month < 13; month++) {
       yearRecords.put(month, new YearRecord());
@@ -41,7 +40,7 @@ public class RecordService {
       distance += record.getDistance();
       yearRecords.get(month).setSum(distance);
     }
-    return YearRecords.builder().yearRecords(yearRecords).build();
+    return yearRecords;
   }
 
   public Record register(Record record) {
