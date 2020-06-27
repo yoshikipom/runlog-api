@@ -85,6 +85,60 @@ paths:
                     date: '2020-06-01'
                     distance: 10
                     memo: test memo
+  /yearRecords:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  '1':
+                    $ref: '#/components/schemas/MonthRecord'
+                  '2':
+                    $ref: '#/components/schemas/MonthRecord'
+                  '3':
+                    $ref: '#/components/schemas/MonthRecord'
+                  '4':
+                    $ref: '#/components/schemas/MonthRecord'
+                  '5':
+                    $ref: '#/components/schemas/MonthRecord'
+                  '6':
+                    $ref: '#/components/schemas/MonthRecord'
+                  '7':
+                    $ref: '#/components/schemas/MonthRecord'
+                  '8':
+                    $ref: '#/components/schemas/MonthRecord'
+                  '9':
+                    $ref: '#/components/schemas/MonthRecord'
+                  '10':
+                    $ref: '#/components/schemas/MonthRecord'
+                  '11':
+                    $ref: '#/components/schemas/MonthRecord'
+                  '12':
+                    $ref: '#/components/schemas/MonthRecord'
+                required:
+                  - '1'
+                  - '2'
+                  - '3'
+                  - '4'
+                  - '5'
+                  - '6'
+                  - '7'
+                  - '8'
+                  - '9'
+                  - '10'
+                  - '11'
+                  - '12'
+      operationId: get-yearRecords
+      parameters:
+        - schema:
+            type: integer
+          in: query
+          name: year
+          required: true
 components:
   schemas:
     Record:
@@ -108,3 +162,14 @@ components:
         - date
         - distance
         - memo
+    MonthRecord:
+      title: MonthRecord
+      type: object
+      properties:
+        sum:
+          type: number
+      required:
+        - sum
+      x-examples:
+        example-1:
+          sum: 100
