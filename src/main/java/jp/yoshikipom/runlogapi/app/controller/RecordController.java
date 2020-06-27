@@ -49,7 +49,7 @@ public class RecordController {
       } catch (Exception e) {
         throw new BadRequestException("month param in query is invalid");
       }
-      return this.recordService.findMonthRecords(year, month);
+      return this.recordService.findRecordsByMonth(year, month);
     }
     return this.recordService.findRecords();
   }

@@ -1,12 +1,11 @@
 package jp.yoshikipom.runlogapi.domain.service;
 
 import java.time.LocalDate;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
+import jp.yoshikipom.runlogapi.domain.model.MonthRecord;
 import jp.yoshikipom.runlogapi.domain.model.Record;
-import jp.yoshikipom.runlogapi.domain.model.YearRecord;
 import jp.yoshikipom.runlogapi.domain.repo.RecordRepo;
 import org.springframework.stereotype.Service;
 
@@ -23,24 +22,30 @@ public class RecordService {
     return this.recordRepo.findRecords();
   }
 
-  public List<Record> findMonthRecords(int year, int month) {
+  public List<Record> findRecordsByMonth(int year, int month) {
     return this.recordRepo.findRecordsByMonth(year, month);
   }
 
-  public Map<Integer, YearRecord> findYearRecords(int year) {
-    Map<Integer, YearRecord> yearRecords = new HashMap<>();
+  public List<MonthRecord> findMonthRecords(int year) {
+    List<MonthRecord> monthRecords = new ArrayList<>();
     for (int month = 1; month < 13; month++) {
-      yearRecords.put(month, new YearRecord());
+      var monthRecord = MonthRecord.builder()
+          .year(year)
+          .month(month)
+          .sum(0f)
+          .build();
+      monthRecords.add(monthRecord);
     }
 
     List<Record> recordsInYear = this.recordRepo.findRecordsByYear(year);
     for (Record record : recordsInYear) {
       int month = record.getDate().getMonthValue();
-      float distance = yearRecords.get(month).getSum();
+      var targetMonthRecord = monthRecords.get(month - 1);
+      float distance = targetMonthRecord.getSum();
       distance += record.getDistance();
-      yearRecords.get(month).setSum(distance);
+      targetMonthRecord.setSum(distance);
     }
-    return yearRecords;
+    return monthRecords;
   }
 
   public Record register(Record record) {
