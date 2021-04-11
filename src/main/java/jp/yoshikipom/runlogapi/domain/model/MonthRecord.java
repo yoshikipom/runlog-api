@@ -9,8 +9,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class YearRecord {
+public class MonthRecord {
 
+  private Integer year;
+  private Integer month;
   @Builder.Default
   private Float sum = 0f;
 }

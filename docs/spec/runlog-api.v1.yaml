@@ -85,6 +85,24 @@ paths:
                     date: '2020-06-01'
                     distance: 10
                     memo: test memo
+  /monthRecords:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MonthRecord'
+      operationId: get-monthRecords
+      parameters:
+        - schema:
+            type: integer
+          in: query
+          name: year
+          required: true
 components:
   schemas:
     Record:
@@ -108,3 +126,17 @@ components:
         - date
         - distance
         - memo
+    MonthRecord:
+      title: MonthRecord
+      type: object
+      x-examples:
+        example-1:
+          sum: 100
+          month: 1
+      properties:
+        sum:
+          type: number
+        month:
+          type: integer
+      required:
+        - sum

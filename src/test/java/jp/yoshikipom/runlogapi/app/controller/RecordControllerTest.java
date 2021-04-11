@@ -48,7 +48,7 @@ class RecordControllerTest {
 
   @Test
   void getRecords_successByMonth() throws Exception {
-    when(mockedService.findMonthRecords(2020, 5)).thenReturn(createList());
+    when(mockedService.findRecordsByMonth(2020, 5)).thenReturn(createList());
 
     String expectedResponse = new TestUtil().readFile("data/app/response/records-200.json");
 

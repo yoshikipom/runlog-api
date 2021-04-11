@@ -59,7 +59,7 @@ class RecordServiceTest {
   }
 
   @Test
-  void findYearRecords_success() {
+  void findMonthRecords_success() {
     Record record1 = Record.builder()
         .date(LocalDate.of(2020, 2, 1))
         .distance(10)
@@ -71,22 +71,24 @@ class RecordServiceTest {
     List<Record> records = List.of(record1, record2);
     when(recordRepo.findRecordsByYear(2020)).thenReturn(records);
 
-    var actual = target.findYearRecords(2020);
-    for (var entry : actual.entrySet()) {
-      int month = entry.getKey();
-      float sum = entry.getValue().getSum();
+    var actual = target.findMonthRecords(2020);
+    for (var monthRecord : actual) {
+      int year = monthRecord.getYear();
+      int month = monthRecord.getMonth();
+      float sum = monthRecord.getSum();
       if (month == 2) {
         assertEquals(20, sum);
       } else {
         assertEquals(0, sum);
       }
+      assertEquals(2020, year);
     }
   }
 
   @Test
-  void findMonthRecords_success() {
+  void findRecordsByMonth_success() {
     when(recordRepo.findRecordsByMonth(2020, 5)).thenReturn(dummyRecords);
-    var actual = target.findMonthRecords(2020, 5);
+    var actual = target.findRecordsByMonth(2020, 5);
     assertEquals(dummyRecords, actual);
   }
 
